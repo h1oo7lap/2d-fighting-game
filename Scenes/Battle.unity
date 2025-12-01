@@ -430,7 +430,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &458076296
 Transform:
   m_ObjectHideFlags: 0
@@ -2414,7 +2414,11 @@ MonoBehaviour:
   hitbox: {fileID: 458076295}
   attackDuration: 0.2
   damage: 10
-  opponentHealth: {fileID: 0}
+  skillKDamage: 30
+  skillKDuration: 0.3
+  skillKManaCost: 40
+  skillKSize: {x: 2, y: 2, z: 1}
+  skillKForwardOffset: 0.5
   mana: {fileID: 0}
 --- !u!114 &1864109286
 MonoBehaviour:
@@ -2725,7 +2729,11 @@ MonoBehaviour:
   hitbox: {fileID: 1605786064}
   attackDuration: 0.2
   damage: 10
-  opponentHealth: {fileID: 0}
+  skillKDamage: 30
+  skillKDuration: 0.3
+  skillKManaCost: 40
+  skillKSize: {x: 2, y: 2, z: 1}
+  skillKForwardOffset: 0.5
   mana: {fileID: 0}
 --- !u!114 &2006196330
 MonoBehaviour:

@@ -1,22 +1,31 @@
 using System.Collections;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed = 5f; // tốc độ di chuyển
-    public float jumpForce = 5f; // lực nhảy
-    public bool isPlayer1 = true; // phân biệt P1 / P2
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
+    public bool isPlayer1 = true;
 
-    [Header("Combat")]
-    public GameObject hitbox; // Hitbox của đòn đánh
-    public float attackDuration = 0.2f; // thời gian hitbox active
-    public int damage = 10; // sát thương cơ bản
+    [Header("Skill J")]
+    public GameObject hitbox;
+    public float attackDuration = 0.2f;
+    public int damage = 10; // damage đánh thường
 
-    [Header("References")]
-    public PlayerHealth opponentHealth; // tham chiếu tới Player khác
+    [Header("Skill K")]
+    public int skillKDamage = 30;
+    public float skillKDuration = 0.3f;
+    public int skillKManaCost = 50;
+    public Vector3 skillKSize = new Vector3(2f, 2f, 1f);
+    public float skillKForwardOffset = 0.5f;
+
+    private Vector3 originalHitboxScale;
+    private Vector3 originalHitboxPosition;
+
+    [Header("Mana")]
+    public PlayerMana mana;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -24,9 +33,6 @@ public class PlayerController : MonoBehaviour
 
     private Hitbox hitboxScript;
     private Collider2D hitboxCollider;
-
-    [Header("Mana")]
-    public PlayerMana mana;
 
     void Awake()
     {
@@ -39,7 +45,10 @@ public class PlayerController : MonoBehaviour
         {
             hitboxScript = hitbox.GetComponent<Hitbox>();
             hitboxCollider = hitbox.GetComponent<Collider2D>();
-            hitbox.SetActive(false); // tắt hitbox lúc bắt đầu
+            hitbox.SetActive(false);
+
+            originalHitboxScale = hitbox.transform.localScale;
+            originalHitboxPosition = hitbox.transform.localPosition;
         }
     }
 
@@ -47,41 +56,42 @@ public class PlayerController : MonoBehaviour
     {
         float move = 0f;
 
-        // Di chuyển + nhảy
         if (isPlayer1)
         {
             if (Input.GetKey(KeyCode.A))
-                move = -1f;
+                move = -1;
             if (Input.GetKey(KeyCode.D))
-                move = 1f;
+                move = 1;
             if (Input.GetKeyDown(KeyCode.W) && isGrounded)
                 Jump();
 
             if (Input.GetKeyDown(KeyCode.J))
                 Attack();
+            if (Input.GetKeyDown(KeyCode.K))
+                SkillK();
         }
         else
         {
             if (Input.GetKey(KeyCode.LeftArrow))
-                move = -1f;
+                move = -1;
             if (Input.GetKey(KeyCode.RightArrow))
-                move = 1f;
+                move = 1;
             if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
                 Jump();
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 Attack();
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                SkillK();
         }
 
-        // Áp vận tốc di chuyển
         rb.velocity = new Vector2(move * moveSpeed, rb.velocity.y);
 
-        // Animation
         anim.SetFloat("Speed", Mathf.Abs(move));
         anim.SetBool("IsJumping", !isGrounded);
 
         if (move > 0)
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = Vector3.one;
         else if (move < 0)
             transform.localScale = new Vector3(-1, 1, 1);
     }
@@ -94,7 +104,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        // Chạm mặt đất → cho phép nhảy lại
         if (col.contacts[0].normal.y > 0.5f)
             isGrounded = true;
     }
@@ -104,31 +113,56 @@ public class PlayerController : MonoBehaviour
         if (!mana.UseMana(20))
             return;
 
-        if (hitbox != null)
-        {
-            if (hitboxScript != null)
-            {
-                hitboxScript.ResetDamageStatus();
-            }
-            if (hitboxCollider != null)
-            {
-                hitboxCollider.enabled = false;
-            }
+        if (hitboxScript != null)
+            hitboxScript.damage = damage;
 
-            hitbox.SetActive(true);
+        hitbox.transform.localScale = originalHitboxScale;
+        hitbox.transform.localPosition = originalHitboxPosition;
 
-            if (hitboxCollider != null)
-            {
-                hitboxCollider.enabled = true;
-            }
-            anim.SetTrigger("BasicAttack");
-            StartCoroutine(DisableHitbox());
-        }
+        DoHitboxAttack("BasicAttack", attackDuration);
     }
 
-    IEnumerator DisableHitbox()
+    void SkillK()
     {
-        yield return new WaitForSeconds(attackDuration);
+        if (!mana.UseMana(skillKManaCost))
+            return;
+
+        if (hitboxScript != null)
+            hitboxScript.damage = skillKDamage;
+
+        hitbox.transform.localScale = skillKSize;
+
+        float dir = transform.localScale.x > 0 ? 1 : -1;
+
+        hitbox.transform.localPosition = new Vector3(
+            originalHitboxPosition.x + skillKForwardOffset * dir,
+            originalHitboxPosition.y,
+            originalHitboxPosition.z
+        );
+
+        DoHitboxAttack("SkillK", skillKDuration);
+    }
+
+    void DoHitboxAttack(string animationName, float duration)
+    {
+        if (hitboxScript != null)
+            hitboxScript.ResetDamageStatus();
+
+        hitboxCollider.enabled = false;
+        hitbox.SetActive(true);
+        hitboxCollider.enabled = true;
+
+        anim.SetTrigger(animationName);
+
+        StartCoroutine(DisableHitbox(duration));
+    }
+
+    IEnumerator DisableHitbox(float duration)
+    {
+        yield return new WaitForSeconds(duration);
         hitbox.SetActive(false);
+
+        hitbox.transform.localScale = originalHitboxScale;
+        hitbox.transform.localPosition = originalHitboxPosition;
     }
 }
