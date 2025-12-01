@@ -6,12 +6,24 @@ public class Hitbox : MonoBehaviour
 {
     public int damage = 10;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private bool hasDealtDamage = false;
+
+    public void ResetDamageStatus()
     {
-        PlayerHealth ph = other.GetComponent<PlayerHealth>();
-        if (ph != null)
+        hasDealtDamage = false;
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (!hasDealtDamage)
         {
-            ph.TakeDamage(damage);
+            PlayerHealth ph = other.GetComponent<PlayerHealth>();
+
+            if (ph != null)
+            {
+                ph.TakeDamage(damage);
+                hasDealtDamage = true;
+            }
         }
     }
 }

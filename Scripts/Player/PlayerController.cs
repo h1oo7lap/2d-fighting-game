@@ -22,12 +22,25 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private bool isGrounded = true;
 
+    private Hitbox hitboxScript;
+    private Collider2D hitboxCollider;
+
+    [Header("Mana")]
+    public PlayerMana mana;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        mana = GetComponent<PlayerMana>();
+
         if (hitbox != null)
+        {
+            hitboxScript = hitbox.GetComponent<Hitbox>();
+            hitboxCollider = hitbox.GetComponent<Collider2D>();
             hitbox.SetActive(false); // tắt hitbox lúc bắt đầu
+        }
     }
 
     void Update()
@@ -88,9 +101,26 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
+        if (!mana.UseMana(20))
+            return;
+
         if (hitbox != null)
         {
+            if (hitboxScript != null)
+            {
+                hitboxScript.ResetDamageStatus();
+            }
+            if (hitboxCollider != null)
+            {
+                hitboxCollider.enabled = false;
+            }
+
             hitbox.SetActive(true);
+
+            if (hitboxCollider != null)
+            {
+                hitboxCollider.enabled = true;
+            }
             anim.SetTrigger("BasicAttack");
             StartCoroutine(DisableHitbox());
         }
