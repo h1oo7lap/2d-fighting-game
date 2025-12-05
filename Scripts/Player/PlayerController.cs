@@ -21,11 +21,21 @@ public class PlayerController : MonoBehaviour
     public Vector3 skillKSize = new Vector3(2f, 2f, 1f);
     public float skillKForwardOffset = 0.5f;
 
+    [Header("Skill L - Projectile")]
+    public GameObject projectilePrefab; // Prefab của viên đạn chưởng
+    public int projectileDamage = 20;
+    public int projectileManaCost = 30;
+    public float projectileSpeed = 10f;
+    public Vector3 projectileSpawnOffset = new Vector3(1f, 0f, 0f); // Vị trí spawn projectile
+
     private Vector3 originalHitboxScale;
     private Vector3 originalHitboxPosition;
 
     [Header("Mana")]
     public PlayerMana mana;
+
+    [Header("Health")]
+    private PlayerHealth health;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -40,6 +50,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         mana = GetComponent<PlayerMana>();
+        health = GetComponent<PlayerHealth>();
 
         if (hitbox != null)
         {
@@ -54,6 +65,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Không cho phép hành động nếu đã chết
+        if (health != null && health.IsDead())
+            return;
+
         float move = 0f;
 
         if (isPlayer1)
@@ -69,6 +84,8 @@ public class PlayerController : MonoBehaviour
                 Attack();
             if (Input.GetKeyDown(KeyCode.K))
                 SkillK();
+            if (Input.GetKeyDown(KeyCode.L))
+                ShootProjectile();
         }
         else
         {
@@ -83,6 +100,8 @@ public class PlayerController : MonoBehaviour
                 Attack();
             if (Input.GetKeyDown(KeyCode.Alpha2))
                 SkillK();
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+                ShootProjectile();
         }
 
         rb.velocity = new Vector2(move * moveSpeed, rb.velocity.y);
@@ -164,5 +183,50 @@ public class PlayerController : MonoBehaviour
 
         hitbox.transform.localScale = originalHitboxScale;
         hitbox.transform.localPosition = originalHitboxPosition;
+    }
+
+    void ShootProjectile()
+    {
+        // Kiểm tra mana
+        if (!mana.UseMana(projectileManaCost))
+            return;
+
+        // Kiểm tra có prefab không
+        if (projectilePrefab == null)
+        {
+            Debug.LogWarning("Projectile Prefab chưa được gán!");
+            return;
+        }
+
+        // Xác định hướng bắn (dựa vào hướng nhân vật đang quay)
+        float direction = transform.localScale.x > 0 ? 1 : -1;
+        Vector2 shootDirection = new Vector2(direction, 0);
+
+        // Tính vị trí spawn projectile
+        Vector3 spawnPosition = transform.position + new Vector3(
+            projectileSpawnOffset.x * direction,
+            projectileSpawnOffset.y,
+            projectileSpawnOffset.z
+        );
+
+        // Tạo projectile
+        GameObject proj = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+
+        // Khởi tạo projectile
+        Projectile projScript = proj.GetComponent<Projectile>();
+        if (projScript != null)
+        {
+            projScript.damage = projectileDamage;
+            projScript.speed = projectileSpeed;
+            projScript.Initialize(shootDirection, gameObject);
+        }
+
+        // Chơi animation (nếu có)
+        if (anim != null)
+        {
+            anim.SetTrigger("ShootProjectile");
+        }
+
+        Debug.Log(gameObject.name + " bắn chưởng!");
     }
 }
