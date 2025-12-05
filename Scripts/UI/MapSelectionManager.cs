@@ -24,12 +24,40 @@ public class MapSelectionManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("=== MapSelectionManager Start ===");
+        
+        // Check GameManager
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("GameManager.Instance is NULL! Tạo GameManager GameObject trong scene!");
+            return;
+        }
+        
+        // Check available maps
+        if (availableMaps == null || availableMaps.Length == 0)
+        {
+            Debug.LogError("availableMaps is empty! Assign MapData assets trong Inspector!");
+            return;
+        }
+        
+        Debug.Log("Available maps: " + availableMaps.Length);
+        
         SetupUI();
         UpdateUI();
     }
 
     void SetupUI()
     {
+        Debug.Log("=== SetupUI ===");
+        
+        // Check map buttons
+        if (mapButtons == null || mapButtons.Length == 0)
+        {
+            Debug.LogError("mapButtons array is empty! Assign buttons trong Inspector!");
+            return;
+        }
+        
+        Debug.Log("Map buttons count: " + mapButtons.Length);
         // Setup map buttons
         for (int i = 0; i < mapButtons.Length && i < availableMaps.Length; i++)
         {
@@ -51,8 +79,26 @@ public class MapSelectionManager : MonoBehaviour
 
     void OnMapButtonClicked(int mapIndex)
     {
+        Debug.Log("=== Map button clicked: Index " + mapIndex + " ===");
+        
+        if (mapIndex < 0 || mapIndex >= availableMaps.Length)
+        {
+            Debug.LogError("Invalid map index: " + mapIndex);
+            return;
+        }
+        
         selectedMap = availableMaps[mapIndex];
-        GameManager.Instance.SetMap(selectedMap);
+        Debug.Log("Selected map: " + selectedMap.mapName);
+        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetMap(selectedMap);
+        }
+        else
+        {
+            Debug.LogError("GameManager.Instance is NULL!");
+        }
+        
         UpdateUI();
     }
 
@@ -70,9 +116,17 @@ public class MapSelectionManager : MonoBehaviour
 
     void OnStartBattleClicked()
     {
+        Debug.Log("=== Start Battle button clicked ===");
+        
         if (selectedMap != null)
         {
+            Debug.Log("Selected map is: " + selectedMap.mapName);
+            Debug.Log("Loading Battle scene...");
             SceneController.LoadBattle();
+        }
+        else
+        {
+            Debug.LogWarning("No map selected!");
         }
     }
 

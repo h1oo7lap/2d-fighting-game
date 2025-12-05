@@ -5,7 +5,8 @@ using TMPro;
 public class HowToPlayManager : MonoBehaviour
 {
     [Header("UI References")]
-    public TextMeshProUGUI instructionsText;
+    public TextMeshProUGUI player1InstructionsText;
+    public TextMeshProUGUI player2InstructionsText;
     public Button backButton;
 
     void Start()
@@ -15,41 +16,50 @@ public class HowToPlayManager : MonoBehaviour
 
     void SetupUI()
     {
-        // Setup instructions
-        if (instructionsText != null)
+        // Setup instructions cho Player 1
+        if (player1InstructionsText != null)
         {
-            instructionsText.text = GetInstructions();
+            player1InstructionsText.text = GetPlayer1Instructions();
+        }
+
+        // Setup instructions cho Player 2
+        if (player2InstructionsText != null)
+        {
+            player2InstructionsText.text = GetPlayer2Instructions();
         }
 
         // Setup back button
         backButton.onClick.AddListener(OnBackClicked);
     }
 
-    string GetInstructions()
+    string GetPlayer1Instructions()
     {
-        return @"CÁCH CHƠI
+        return @"<b><size=24>PLAYER 1</size></b>
 
-PLAYER 1:
-• Di chuyển: A (trái), D (phải)
-• Nhảy: W
-• Tấn công cơ bản (J): 10 damage, 20 mana
-• Skill mạnh (K): 30 damage, 50 mana
-• Bắn chưởng (L): 20 damage, 30 mana
+<b>Di chuyển:</b>
+• A - Trái
+• D - Phải
+• W - Nhảy
 
-PLAYER 2:
-• Di chuyển: ← (trái), → (phải)
-• Nhảy: ↑
-• Tấn công cơ bản (1): 10 damage, 20 mana
-• Skill mạnh (2): 30 damage, 50 mana
-• Bắn chưởng (3): 20 damage, 30 mana
+<b>Tấn công:</b>
+• J - Tấn công cơ bản
+• K - Skill 1
+• L - Skill 2";
+    }
 
-MỤC TIÊU:
-Đánh bại đối thủ bằng cách giảm HP của họ về 0!
+    string GetPlayer2Instructions()
+    {
+        return @"<b><size=24>PLAYER 2</size></b>
 
-LƯU Ý:
-• Mana sẽ tự động hồi phục theo thời gian
-• Sau khi bị đánh, bạn có 0.5 giây bất tử
-";
+<b>Di chuyển:</b>
+• ← - Trái
+• → - Phải
+• ↑ - Nhảy
+
+<b>Tấn công:</b>
+• 1 - Tấn công cơ bản
+• 2 - Skill 1
+• 3 - Skill 2";
     }
 
     void OnBackClicked()
@@ -57,3 +67,4 @@ LƯU Ý:
         SceneController.LoadHome();
     }
 }
+

@@ -8,7 +8,7 @@ public class SceneController : MonoBehaviour
     public const string SCENE_HOW_TO_PLAY = "HowToPlay";
     public const string SCENE_CHARACTER_SELECTION = "CharacterSelection";
     public const string SCENE_MAP_SELECTION = "MapSelection";
-    public const string SCENE_BATTLE = "Battle";
+    public const string SCENE_BATTLE = "Battle 1"; // Đổi thành tên scene thực tế
     public const string SCENE_RESULT = "Result";
 
     // Navigation Methods
@@ -43,15 +43,35 @@ public class SceneController : MonoBehaviour
 
     public static void LoadBattle()
     {
+        Debug.Log("=== SceneController.LoadBattle called ===");
+        
         // Kiểm tra đã chọn map chưa
         if (GameManager.Instance != null && GameManager.Instance.IsMapSelected())
         {
+            Debug.Log("Map is selected: " + GameManager.Instance.selectedMap.mapName);
+            Debug.Log("Character 1: " + (GameManager.Instance.selectedCharacter1 != null ? GameManager.Instance.selectedCharacter1.characterName : "NULL"));
+            Debug.Log("Character 2: " + (GameManager.Instance.selectedCharacter2 != null ? GameManager.Instance.selectedCharacter2.characterName : "NULL"));
+            
             Time.timeScale = 1; // Đảm bảo game không bị pause
-            SceneManager.LoadScene(SCENE_BATTLE);
+            
+            Debug.Log("Attempting to load scene: " + SCENE_BATTLE);
+            
+            try
+            {
+                SceneManager.LoadScene(SCENE_BATTLE);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Failed to load Battle scene: " + e.Message);
+                Debug.LogError("Make sure 'Battle' scene is added to Build Settings!");
+            }
         }
         else
         {
-            Debug.LogWarning("Chưa chọn map!");
+            if (GameManager.Instance == null)
+                Debug.LogWarning("GameManager.Instance is NULL!");
+            else
+                Debug.LogWarning("Chưa chọn map!");
         }
     }
 

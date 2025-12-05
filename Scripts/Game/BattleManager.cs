@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,16 +11,21 @@ public class BattleManager : MonoBehaviour
     public Transform player2SpawnPoint;
 
     [Header("Map Background")]
-    public SpriteRenderer mapBackground; // Optional - để set background từ MapData
+    public SpriteRenderer mapBackground;
 
-    [Header("UI (Optional - có thể xóa sau)")]
-    public TextMeshProUGUI resultText; // Có thể xóa vì giờ dùng Result scene
+    [Header("UI Sliders")]
+    public Slider player1HPSlider;
+    public Slider player1ManaSlider;
+    public Slider player2HPSlider;
+    public Slider player2ManaSlider;
+
+    [Header("UI (Optional)")]
+    public TextMeshProUGUI resultText;
 
     private GameObject player1Instance;
     private GameObject player2Instance;
     private PlayerHealth player1Health;
     private PlayerHealth player2Health;
-
     private bool gameEnded = false;
 
     void Start()
@@ -29,7 +33,6 @@ public class BattleManager : MonoBehaviour
         SpawnCharacters();
         LoadMapBackground();
         
-        // Ẩn text kết quả nếu còn dùng
         if (resultText != null)
             resultText.gameObject.SetActive(false);
     }
@@ -38,7 +41,7 @@ public class BattleManager : MonoBehaviour
     {
         if (GameManager.Instance == null)
         {
-            Debug.LogError("GameManager không tồn tại! Không thể spawn characters.");
+            Debug.LogError("GameManager không tồn tại!");
             return;
         }
 
@@ -52,21 +55,23 @@ public class BattleManager : MonoBehaviour
             );
             player1Instance.name = "Player1";
             
-            // Get PlayerHealth component
             player1Health = player1Instance.GetComponent<PlayerHealth>();
             if (player1Health != null)
             {
                 player1Health.OnDeathComplete += OnPlayer1DeathComplete;
+                if (player1HPSlider != null)
+                    player1Health.hpSlider = player1HPSlider;
             }
 
-            // Ensure PlayerController knows it's player 1
+            PlayerMana p1Mana = player1Instance.GetComponent<PlayerMana>();
+            if (p1Mana != null && player1ManaSlider != null)
+                p1Mana.manaSlider = player1ManaSlider;
+
             PlayerController p1Controller = player1Instance.GetComponent<PlayerController>();
             if (p1Controller != null)
-            {
                 p1Controller.isPlayer1 = true;
-            }
 
-            Debug.Log("Spawned Player 1: " + GameManager.Instance.selectedCharacter1.characterName);
+            Debug.Log("Spawned Player 1");
         }
 
         // Spawn Player 2
@@ -79,21 +84,23 @@ public class BattleManager : MonoBehaviour
             );
             player2Instance.name = "Player2";
             
-            // Get PlayerHealth component
             player2Health = player2Instance.GetComponent<PlayerHealth>();
             if (player2Health != null)
             {
                 player2Health.OnDeathComplete += OnPlayer2DeathComplete;
+                if (player2HPSlider != null)
+                    player2Health.hpSlider = player2HPSlider;
             }
 
-            // Ensure PlayerController knows it's player 2
+            PlayerMana p2Mana = player2Instance.GetComponent<PlayerMana>();
+            if (p2Mana != null && player2ManaSlider != null)
+                p2Mana.manaSlider = player2ManaSlider;
+
             PlayerController p2Controller = player2Instance.GetComponent<PlayerController>();
             if (p2Controller != null)
-            {
                 p2Controller.isPlayer1 = false;
-            }
 
-            Debug.Log("Spawned Player 2: " + GameManager.Instance.selectedCharacter2.characterName);
+            Debug.Log("Spawned Player 2");
         }
     }
 
@@ -102,17 +109,14 @@ public class BattleManager : MonoBehaviour
         if (GameManager.Instance == null || GameManager.Instance.selectedMap == null)
             return;
 
-        // Set background sprite nếu có
         if (mapBackground != null && GameManager.Instance.selectedMap.backgroundSprite != null)
         {
             mapBackground.sprite = GameManager.Instance.selectedMap.backgroundSprite;
-            Debug.Log("Loaded map background: " + GameManager.Instance.selectedMap.mapName);
         }
     }
 
     void OnDestroy()
     {
-        // Hủy đăng ký events
         if (player1Health != null)
             player1Health.OnDeathComplete -= OnPlayer1DeathComplete;
         
@@ -142,20 +146,15 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("Trận đấu kết thúc: " + winner + " thắng!");
 
-        // Lưu winner vào GameManager
         if (GameManager.Instance != null)
-        {
             GameManager.Instance.SetWinner(winner);
-        }
 
-        // Hiện text tạm thời (optional)
         if (resultText != null)
         {
             resultText.gameObject.SetActive(true);
             resultText.text = winner + " thắng!";
         }
 
-        // Đợi 2 giây rồi chuyển sang Result scene
         StartCoroutine(LoadResultSceneAfterDelay(2f));
     }
 

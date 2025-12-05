@@ -31,7 +31,9 @@ public class PlayerMana : MonoBehaviour
             return false;
 
         currentMana -= amount;
-        manaSlider.value = currentMana;
+        
+        if (manaSlider != null)
+            manaSlider.value = currentMana;
 
         return true;
     }
@@ -42,7 +44,8 @@ public class PlayerMana : MonoBehaviour
         if (currentMana > maxMana)
             currentMana = maxMana;
 
-        manaSlider.value = currentMana;
+        if (manaSlider != null)
+            manaSlider.value = currentMana;
     }
 
     void Update()

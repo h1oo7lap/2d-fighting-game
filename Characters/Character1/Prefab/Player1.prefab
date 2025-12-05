@@ -298,6 +298,8 @@ MonoBehaviour:
   maxHP: 100
   currentHP: 0
   hpSlider: {fileID: 0}
+  invincibilityDuration: 0.5
+  dieAnimationDuration: 1
 --- !u!95 &5211608914325408694
 Animator:
   serializedVersion: 5
