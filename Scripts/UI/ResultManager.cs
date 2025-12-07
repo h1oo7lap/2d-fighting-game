@@ -19,6 +19,10 @@ public class ResultManager : MonoBehaviour
     {
         DisplayResults();
         SetupButtons();
+        
+        // Phát nhạc nền Result
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayResultBGM();
     }
 
     void DisplayResults()
@@ -61,12 +65,20 @@ public class ResultManager : MonoBehaviour
 
     void OnRematchClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         // Giữ nguyên characters và map, chơi lại
         SceneController.LoadBattle();
     }
 
     void OnChangeCharactersClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         // Reset selections và quay về character selection
         if (GameManager.Instance != null)
             GameManager.Instance.ResetSelections();
@@ -76,6 +88,10 @@ public class ResultManager : MonoBehaviour
 
     void OnMainMenuClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         // Reset và về home
         if (GameManager.Instance != null)
             GameManager.Instance.ResetSelections();

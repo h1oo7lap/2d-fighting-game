@@ -57,6 +57,11 @@ public class PlayerHealth : MonoBehaviour
         {
             // Chơi animation hurt
             PlayHurtAnimation();
+            
+            // Play hurt sound
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayHurtSound();
+            
             // Kích hoạt invincibility frames
             StartCoroutine(InvincibilityFrames());
         }
@@ -77,6 +82,10 @@ public class PlayerHealth : MonoBehaviour
 
         isDead = true;
         Debug.Log(gameObject.name + " đã chết!");
+        
+        // Play death sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayDeathSound();
 
         // Chơi animation die
         if (anim != null)

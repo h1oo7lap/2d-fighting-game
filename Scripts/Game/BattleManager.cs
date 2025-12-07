@@ -35,6 +35,10 @@ public class BattleManager : MonoBehaviour
         
         if (resultText != null)
             resultText.gameObject.SetActive(false);
+        
+        // Phát nhạc nền Battle
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayBattleBGM();
     }
 
     void SpawnCharacters()
@@ -154,6 +158,10 @@ public class BattleManager : MonoBehaviour
             resultText.gameObject.SetActive(true);
             resultText.text = winner + " thắng!";
         }
+        
+        // Play victory sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayVictorySound();
 
         StartCoroutine(LoadResultSceneAfterDelay(2f));
     }

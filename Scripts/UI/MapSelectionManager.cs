@@ -44,6 +44,10 @@ public class MapSelectionManager : MonoBehaviour
         
         SetupUI();
         UpdateUI();
+        
+        // Phát nhạc nền Map Selection
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayMapSelectionBGM();
     }
 
     void SetupUI()
@@ -80,6 +84,10 @@ public class MapSelectionManager : MonoBehaviour
     void OnMapButtonClicked(int mapIndex)
     {
         Debug.Log("=== Map button clicked: Index " + mapIndex + " ===");
+        
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
         
         if (mapIndex < 0 || mapIndex >= availableMaps.Length)
         {
@@ -118,6 +126,10 @@ public class MapSelectionManager : MonoBehaviour
     {
         Debug.Log("=== Start Battle button clicked ===");
         
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         if (selectedMap != null)
         {
             Debug.Log("Selected map is: " + selectedMap.mapName);
@@ -132,6 +144,10 @@ public class MapSelectionManager : MonoBehaviour
 
     void OnBackButtonClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         SceneController.LoadCharacterSelection();
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62722dac1f377224b83cda976763ccd8, type: 3}
   m_Name: Character2Data
   m_EditorClassIdentifier: 
-  characterName: Character 2
+  characterName: "Siuuu Nh\u01B0n"
   description: "siu nh\u01B0n"
   characterPrefab: {fileID: 1320559905818182366, guid: 699c3895f3926f747a2330160a3f82a8, type: 3}
   portraitSprite: {fileID: 1015401739, guid: f16aaff1544b3c74bbebfedd4174feb5, type: 3}

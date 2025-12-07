@@ -12,6 +12,10 @@ public class HomeMenuManager : MonoBehaviour
     void Start()
     {
         SetupButtons();
+        
+        // Phát nhạc nền Home
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayHomeBGM();
     }
 
     void SetupButtons()
@@ -25,6 +29,10 @@ public class HomeMenuManager : MonoBehaviour
 
     void OnPlayClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         // Reset selections khi bắt đầu game mới
         if (GameManager.Instance != null)
             GameManager.Instance.ResetSelections();
@@ -34,11 +42,19 @@ public class HomeMenuManager : MonoBehaviour
 
     void OnHowToPlayClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         SceneController.LoadHowToPlay();
     }
 
     void OnQuitClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         SceneController.QuitGame();
     }
 }

@@ -15,6 +15,10 @@ public class MapData : ScriptableObject
     [Header("Map ID")]
     public int mapID; // 0 = Map1, 1 = Map2, etc.
     
+    [Header("Battle Scene (Optional)")]
+    [Tooltip("Để trống nếu dùng chung Battle scene. Chỉ điền nếu map này có Battle scene riêng.")]
+    public string battleSceneName; // Tên scene battle riêng (optional)
+    
     // Có thể thêm sau:
     // public AudioClip backgroundMusic;
     // public GameObject[] environmentPrefabs;

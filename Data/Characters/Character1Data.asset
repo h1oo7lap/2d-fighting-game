@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62722dac1f377224b83cda976763ccd8, type: 3}
   m_Name: Character1Data
   m_EditorClassIdentifier: 
-  characterName: Character 1
+  characterName: "M\xE9ooo"
   description: Meo :))
   characterPrefab: {fileID: 6593878808691369810, guid: 1891e6a0596b4a44e9fbb7672263c436, type: 3}
   portraitSprite: {fileID: 1998980525, guid: feb7ab242a40e0b41a1f47c7e6e094e3, type: 3}

@@ -54,16 +54,29 @@ public class SceneController : MonoBehaviour
             
             Time.timeScale = 1; // Đảm bảo game không bị pause
             
-            Debug.Log("Attempting to load scene: " + SCENE_BATTLE);
+            // Kiểm tra xem map có battle scene riêng không
+            string sceneToLoad = SCENE_BATTLE; // Default
+            
+            if (!string.IsNullOrEmpty(GameManager.Instance.selectedMap.battleSceneName))
+            {
+                sceneToLoad = GameManager.Instance.selectedMap.battleSceneName;
+                Debug.Log("Map has custom battle scene: " + sceneToLoad);
+            }
+            else
+            {
+                Debug.Log("Using default battle scene: " + sceneToLoad);
+            }
+            
+            Debug.Log("Attempting to load scene: " + sceneToLoad);
             
             try
             {
-                SceneManager.LoadScene(SCENE_BATTLE);
+                SceneManager.LoadScene(sceneToLoad);
             }
             catch (System.Exception e)
             {
                 Debug.LogError("Failed to load Battle scene: " + e.Message);
-                Debug.LogError("Make sure 'Battle' scene is added to Build Settings!");
+                Debug.LogError("Make sure '" + sceneToLoad + "' scene is added to Build Settings!");
             }
         }
         else

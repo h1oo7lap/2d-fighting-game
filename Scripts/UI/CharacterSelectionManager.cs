@@ -28,6 +28,10 @@ public class CharacterSelectionManager : MonoBehaviour
     {
         SetupUI();
         UpdateUI();
+        
+        // Phát nhạc nền Character Selection
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayCharacterSelectionBGM();
     }
 
     void SetupUI()
@@ -53,6 +57,10 @@ public class CharacterSelectionManager : MonoBehaviour
 
     void OnCharacterButtonClicked(int characterIndex)
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         CharacterData selectedChar = availableCharacters[characterIndex];
 
         // Logic: Player 1 chọn trước, sau đó Player 2
@@ -97,6 +105,10 @@ public class CharacterSelectionManager : MonoBehaviour
 
     void OnNextButtonClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         if (player1Selection != null && player2Selection != null)
         {
             SceneController.LoadMapSelection();
@@ -105,6 +117,10 @@ public class CharacterSelectionManager : MonoBehaviour
 
     void OnBackButtonClicked()
     {
+        // Play button click sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+        
         SceneController.LoadHome();
     }
 }

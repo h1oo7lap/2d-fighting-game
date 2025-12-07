@@ -139,6 +139,10 @@ public class PlayerController : MonoBehaviour
         hitbox.transform.localPosition = originalHitboxPosition;
 
         DoHitboxAttack("BasicAttack", attackDuration);
+        
+        // Play attack sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayAttackSound();
     }
 
     void SkillK()
@@ -160,6 +164,10 @@ public class PlayerController : MonoBehaviour
         );
 
         DoHitboxAttack("SkillK", skillKDuration);
+        
+        // Play attack sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayAttackSound();
     }
 
     void DoHitboxAttack(string animationName, float duration)
@@ -226,6 +234,10 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetTrigger("ShootProjectile");
         }
+        
+        // Play attack sound
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayAttackSound();
 
         Debug.Log(gameObject.name + " bắn chưởng!");
     }

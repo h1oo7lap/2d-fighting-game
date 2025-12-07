@@ -1135,7 +1135,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 160, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1116281892
 MonoBehaviour:
@@ -1478,7 +1478,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 160, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1673144184
 MonoBehaviour:
@@ -1738,16 +1738,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableMaps:
   - {fileID: 11400000, guid: 76832e453ef7f5b4ea6af8470da4ae85, type: 2}
+  - {fileID: 11400000, guid: 8fc9346e3140b124ba4aa4b414caa414, type: 2}
   titleText: {fileID: 820482646}
   selectedMapText: {fileID: 557004164}
   startBattleButton: {fileID: 425691235}
   backButton: {fileID: 1825129889}
   mapButtons:
   - {fileID: 1891242644}
+  - {fileID: 228490353}
   mapPreviews:
   - {fileID: 1116281892}
+  - {fileID: 1673144184}
   mapNames:
   - {fileID: 1080245857}
+  - {fileID: 1287248437}
 --- !u!4 &1832420069
 Transform:
   m_ObjectHideFlags: 0
