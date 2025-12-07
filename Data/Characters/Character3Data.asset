@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62722dac1f377224b83cda976763ccd8, type: 3}
+  m_Name: Character3Data
+  m_EditorClassIdentifier: 
+  characterName: "B\xED_Ngu"
+  description: hot
+  characterPrefab: {fileID: 6593878808691369810, guid: e051090422bb79543af0a63b3f237cb3, type: 3}
+  portraitSprite: {fileID: -1214983542, guid: 422d55ffcee5d8d4eb3a26fae56cc0f9, type: 3}
+  maxHP: 100
+  attackDamage: 10
+  skillKDamage: 30
+  projectileDamage: 20
+  characterID: 3

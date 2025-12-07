@@ -266,8 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b53f3ae015af64d83f603c7008a2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 7.5
+  moveSpeed: 7
+  jumpForce: 10
   isPlayer1: 1
   hitbox: {fileID: 37662282578566072}
   attackDuration: 0.2

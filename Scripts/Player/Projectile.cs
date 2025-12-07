@@ -77,8 +77,10 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        // Kiểm tra xem có phải player không
+        // Kiểm tra xem có phải player không (thử tất cả các loại PlayerHealth)
         PlayerHealth targetHealth = other.GetComponent<PlayerHealth>();
+        PlayerHealth3 targetHealth3 = other.GetComponent<PlayerHealth3>();
+        PlayerHealth4 targetHealth4 = other.GetComponent<PlayerHealth4>();
 
         if (targetHealth != null)
         {
@@ -87,6 +89,18 @@ public class Projectile : MonoBehaviour
             hasHit = true;
 
             // Hủy projectile sau khi đánh trúng
+            Destroy(gameObject);
+        }
+        else if (targetHealth3 != null)
+        {
+            targetHealth3.TakeDamage(damage);
+            hasHit = true;
+            Destroy(gameObject);
+        }
+        else if (targetHealth4 != null)
+        {
+            targetHealth4.TakeDamage(damage);
+            hasHit = true;
             Destroy(gameObject);
         }
     }

@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 7.5
+  jumpForce: 7
   isPlayer1: 0
   hitbox: {fileID: 2564011614857973862}
   attackDuration: 0.2
@@ -337,4 +337,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6d0305468d4cb4abb5ac712f570d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 20

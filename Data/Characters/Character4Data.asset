@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62722dac1f377224b83cda976763ccd8, type: 3}
+  m_Name: Character4Data
+  m_EditorClassIdentifier: 
+  characterName: No_Look
+  description: "m\xF9"
+  characterPrefab: {fileID: 6593878808691369810, guid: 215033866cdcca54b9d125a5f921469b, type: 3}
+  portraitSprite: {fileID: 1707808270, guid: f039d2148f30ae94ab731e1ef2f0bfe6, type: 3}
+  maxHP: 100
+  attackDamage: 10
+  skillKDamage: 30
+  projectileDamage: 20
+  characterID: 4
