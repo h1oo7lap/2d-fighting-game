@@ -37,14 +37,14 @@ public class HowToPlayManager : MonoBehaviour
         return @"<b><size=24>PLAYER 1</size></b>
 
 <b>Di chuyển:</b>
-• A - Trái
-• D - Phải
-• W - Nhảy
+A - Trái
+D - Phải
+W - Nhảy
 
-<b>Tấn công:</b>
-• J - Tấn công cơ bản
-• K - Skill 1
-• L - Skill 2";
+<b>Skill:</b>
+J - Skill công cơ bản
+K - Skill 1
+L - Skill 2";
     }
 
     string GetPlayer2Instructions()
@@ -52,14 +52,14 @@ public class HowToPlayManager : MonoBehaviour
         return @"<b><size=24>PLAYER 2</size></b>
 
 <b>Di chuyển:</b>
-• ← - Trái
-• → - Phải
-• ↑ - Nhảy
+← - Trái
+→ - Phải
+↑ - Nhảy
 
-<b>Tấn công:</b>
-• 1 - Tấn công cơ bản
-• 2 - Skill 1
-• 3 - Skill 2";
+<b>Skill:</b>
+1 - Skill công cơ bản
+2 - Skill 1
+3 - Skill 2";
     }
 
     void OnBackClicked()
